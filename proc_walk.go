@@ -1,16 +1,21 @@
+// Walk /proc looking for a process by name
+// go run proc_walk.go -proc process_name_1,process_name_2
+// go run proc_walk.go -proc pluma,gnome-calc
 package main
 
+
 import (
-	"fmt"
-	"io/ioutil"
-	"log"
-	"strconv"
-  "os"
   "bufio"
   "flag"
-  "strings"
+  "fmt"
+  "io/ioutil"
+  "log"
+  "os"
   "regexp"
+  "strconv"
+  "strings"
 )
+
 
 var proc string
 
@@ -45,7 +50,7 @@ func find_pids(proc_list map[string]int) {
     if err != nil { continue }            // 1M reason's it might not be there. move on
     r := bufio.NewReader(f)
     line, err := r.ReadString('\n')
-    f.Close()
+    f.Close()                             // don't defer, close now
     for k := range regex_map {
       if proc_list[k] == 0 && regex_map[k].MatchString(line) {
         proc_list[k] = pid
