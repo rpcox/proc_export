@@ -106,7 +106,7 @@ func getStats(proc_map map[string]string) []byte {
     content, err := ioutil.ReadFile(path)
 
     if err == nil {
-      strings.Replace(k, "-", "_", 2)
+      k = strings.Replace(k, "-", "_", 2)
       response = procStatus(response, k, "1")
       fields := bytes.Split(content, []byte(" "))
       response = setMetricType(response, k + "_minflt", "gauge")
